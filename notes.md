@@ -8,7 +8,7 @@ Greentrace is an app that utilizes Hedera to provide users with a transparent an
 
 Built for the <a href="https://dlt-climate-hackathon.devpost.com/" target="_blank">DLT climate hackathon</a> 2024.
 
-<!-- Demo URL: (testnet)
+<!-- Demo URL: usegreentrace.vercel.app (testnet)
 
 Demo video: -->
 
