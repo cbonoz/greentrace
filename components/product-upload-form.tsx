@@ -17,7 +17,7 @@ const formSchema = z.object({
 });
 
 function UploadForm() {
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<any>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

@@ -2,10 +2,10 @@
 
 import React, { useState, useRef, useEffect, useCallback, useLayoutEffect } from "react";
 import Quagga from "@ericblade/quagga2";
-import Scanner from "./Scanner";
 import { Button } from "./ui/button";
+import Scanner from "./scanner";
 
-const Result = ({ result }) => (
+const Result = ({ result }: { result: any }) => (
   <li>
     {result.codeResult.code} [{result.codeResult.format}]
   </li>
@@ -16,7 +16,7 @@ const BarcodeScanner = () => {
   const [cameras, setCameras] = useState([]); // array of available cameras, as returned by Quagga.CameraAccess.enumerateVideoDevices()
   const [cameraId, setCameraId] = useState(null); // id of the active camera device
   const [cameraError, setCameraError] = useState(null); // error message from failing to access the camera
-  const [results, setResults] = useState([]); // list of scanned results
+  const [results, setResults] = useState<any[]>([]); // list of scanned results
   const [torchOn, setTorch] = useState(false); // toggleable state for "should torch be on"
   const scannerRef = useRef(null); // reference to the scanner element in the DOM
   const [width, setWidth] = useState(400);
@@ -30,7 +30,7 @@ const BarcodeScanner = () => {
   // AND FINALLY, we can call Quagga.CameraAccess.enumerateVideoDevices() to get the list of cameras.
   // Normally, I would place this in an application level "initialization" event, but for this demo, I'm just going to put it in a useEffect() hook in the BarcodeScanner component.
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const enableCamera = async () => {
       await Quagga.CameraAccess.request(null, {});
     };
@@ -42,10 +42,11 @@ const BarcodeScanner = () => {
       console.log("Cameras Detected: ", cameras);
       return cameras;
     };
+
     enableCamera()
       .then(disableCamera)
       .then(enumerateCameras)
-      .then((cameras) => setCameras(cameras))
+      .then((cameras: any) => setCameras(cameras))
       .then(() => Quagga.CameraAccess.disableTorch()) // disable torch at start, in case it was enabled before and we hot-reloaded
       .catch((err) => setCameraError(err));
     return () => disableCamera();
@@ -86,8 +87,8 @@ const BarcodeScanner = () => {
         <p>Enumerating Cameras, browser may be prompting for permissions beforehand</p>
       ) : (
         <form>
-          <select onChange={(event) => setCameraId(event.target.value)}>
-            {cameras.map((camera) => (
+          <select onChange={(event) => setCameraId(event.target.value as any)}>
+            {cameras.map((camera: any) => (
               <option key={camera.deviceId} value={camera.deviceId}>
                 {camera.label || camera.deviceId}
               </option>

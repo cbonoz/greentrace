@@ -31,6 +31,18 @@ const defaultLocatorSettings = {
 
 const defaultDecoders = ["ean_reader"];
 
+interface Props {
+  onDetected: (result: any) => void;
+  scannerRef: any;
+  onScannerReady?: () => void;
+  cameraId?: string | null;
+  facingMode?: string;
+  constraints?: any;
+  locator?: any;
+  decoders?: string[];
+  locate?: boolean;
+}
+
 const Scanner = ({
   onDetected,
   scannerRef,
@@ -41,9 +53,9 @@ const Scanner = ({
   locator = defaultLocatorSettings,
   decoders = defaultDecoders,
   locate = true,
-}) => {
+}: Props) => {
   const errorCheck = useCallback(
-    (result) => {
+    (result: any) => {
       if (!onDetected) {
         return;
       }
@@ -56,7 +68,7 @@ const Scanner = ({
     [onDetected],
   );
 
-  const handleProcessed = (result) => {
+  const handleProcessed = (result: any) => {
     const drawingCtx = Quagga.canvas.ctx.overlay;
     const drawingCanvas = Quagga.canvas.dom.overlay;
     drawingCtx.font = "24px Arial";
@@ -68,12 +80,12 @@ const Scanner = ({
         drawingCtx.clearRect(
           0,
           0,
-          parseInt(drawingCanvas.getAttribute("width")),
-          parseInt(drawingCanvas.getAttribute("height")),
+          parseInt(drawingCanvas.getAttribute("width") || "600"),
+          parseInt(drawingCanvas.getAttribute("height") || "400"),
         );
         result.boxes
-          .filter((box) => box !== result.box)
-          .forEach((box) => {
+          .filter((box: any) => box !== result.box)
+          .forEach((box: any) => {
             Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: "purple", lineWidth: 2 });
           });
       }
@@ -121,7 +133,7 @@ const Scanner = ({
             willReadFrequently: true,
           },
           locator,
-          decoder: { readers: decoders },
+          decoder: { readers: decoders as any },
           locate,
         },
         async (err) => {
