@@ -1,11 +1,11 @@
-
+import BarcodeScanner from "@/components/barcode-scanner";
 
 const Scan = () => {
   return (
     <div>
-      <h1>Scan</h1>
+      <BarcodeScanner />
     </div>
   );
-}
+};
 
 export default Scan;
