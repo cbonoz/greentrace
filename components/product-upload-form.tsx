@@ -47,7 +47,10 @@ function UploadForm() {
     try {
       await setKey(values.sku, values);
       setResult({
-        success: "Product uploaded successfully with barcode " + values.sku,
+        success:
+          "Product uploaded successfully with barcode " +
+          values.sku +
+          ". Users can now discover this product when scanned.",
       });
       // scroll to result
       window.scrollTo(0, document.body.scrollHeight);
