@@ -1,5 +1,5 @@
 <p align='center'>
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/h2fwv6V/logo.png" alt="logo" border="0"></a>
+  <a href="https://imgbb.com/"><img src="https://i.ibb.co/h2fwv6V/logo.png" alt="logo" border="0"></a>
 </p>
 
 # Greentrace
@@ -8,21 +8,24 @@ Greentrace is an app that utilizes Hedera to provide users with a transparent an
 
 Built for the <a href="https://dlt-climate-hackathon.devpost.com/" target="_blank">DLT climate hackathon</a> 2024.
 
-<!-- Demo URL: usegreentrace.vercel.app (testnet)
+Demo URL: usegreentrace.vercel.app
 
-Demo video: -->
-
-
+Demo video:
 
 ## Inspiration
 The inspiration behind Greentrace stems from the urgent need to address climate change and promote sustainable practices in supply chains. By leveraging emerging technologies like Distributed Ledger Technology (DLT) and the Hedera Guardian, Greentrace aims to empower consumers and businesses to make informed choices about the products they purchase and the companies they support. The goal is to create a transparent and auditable system that traces the origins of products back to their sustainable creation practices, thus promoting accountability and incentivizing eco-friendly production methods.
 
 ## What it does
+
 Greentrace is a two-sided web application designed to facilitate the verification and registration of sustainable practices associated with products. On the verification side, users can upload a product's barcode, which is then scanned to extract the barcode text. This text is matched against the Hedera Guardian to verify the authenticity and sustainability of the product's origins.
 
 On the registration side, businesses can assign a barcode a history record detailing the sustainable practices involved in the creation of the product. This record is stored on the Hedera network and is tamper-sealed using the Hedera Guardian, ensuring its integrity and immutability. Additionally, any green sustainability practices associated with the product are also recorded and stored securely on the DLT.
 
 Anyone that uses the Greentrace policy has free access to the Greentrace web app for either uploading barcodes and their origin material or on the consumer side when viewing products out in the market in real time.
+
+Summary:
+1. Certifiers can upload information on products adhering to the policy schema to the Greentrace index regarding their sustainable production.
+2. Consumers can scan products for uploaded products in the wild (ex: at stores, businesses, etc.) and be able to view the data directly from their mobile or camera-equipped devices.
 
 ## How we built it
 
@@ -30,7 +33,8 @@ Greentrace leverages Hedera's innovative policies and methodologies to establish
 
 ## Repo structure
 `/` (root): Main web project
-`/methodology`: Methodology and policy for the Greentrace application (linked PR to come)
+`/methodology`: Methodology and policy for the Greentrace application.
+`/server`: Server code
 
 ## How to run
 
@@ -38,10 +42,12 @@ Greentrace leverages Hedera's innovative policies and methodologies to establish
 
 The web project should now be running on port 3000
 
+
 ## Challenges we ran into
 - Integrating the barcode reader functionality seamlessly into the web application.
 - Ensuring the secure and tamper-proof storage of sustainability records using the Hedera Guardian.
 - Designing an intuitive user interface for both the verification and registration sides of the application.
+
 
 ## Accomplishments that we're proud of
 - Successfully implementing the barcode scanning feature for product verification.
