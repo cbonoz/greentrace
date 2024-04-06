@@ -5,7 +5,7 @@ const Upload = () => {
   return (
     // container classes centered
     <div className="flex flex-col items-center justify-center h-screen">
-      <BasicCard title="Upload Product" description="Upload a product to the Hedera network">
+      <BasicCard title="Upload Product" description="Upload a product to the Hedera network" className="w-96">
         <UploadForm />
       </BasicCard>
     </div>

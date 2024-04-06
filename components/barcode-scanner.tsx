@@ -4,12 +4,9 @@ import React, { useState, useRef, useEffect, useCallback, useLayoutEffect } from
 import Quagga from "@ericblade/quagga2";
 import { Button } from "./ui/button";
 import Scanner from "./scanner";
-
-const Result = ({ result }: { result: any }) => (
-  <li>
-    {result.codeResult.code} [{result.codeResult.format}]
-  </li>
-);
+import { isEmpty } from "@/lib/utils";
+import { getKey } from "@/util/api";
+import RenderObject from "./render-object";
 
 const BarcodeScanner = () => {
   const [scanning, setScanning] = useState(false); // toggleable state for "should render scanner"
@@ -18,9 +15,11 @@ const BarcodeScanner = () => {
   const [cameraError, setCameraError] = useState(null); // error message from failing to access the camera
   const [results, setResults] = useState<any[]>([]); // list of scanned results
   const [torchOn, setTorch] = useState(false); // toggleable state for "should torch be on"
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [data, setData] = useState<any>({});
+
   const scannerRef = useRef(null); // reference to the scanner element in the DOM
-  const [width, setWidth] = useState(400);
-  const [height, setHeight] = useState(400);
 
   // at start, we need to get a list of the available cameras.  We can do that with Quagga.CameraAccess.enumerateVideoDevices.
   // HOWEVER, Android will not allow enumeration to occur unless the user has granted camera permissions to the app/page.
@@ -39,7 +38,7 @@ const BarcodeScanner = () => {
     };
     const enumerateCameras = async () => {
       const cameras = await Quagga.CameraAccess.enumerateVideoDevices();
-      console.log("Cameras Detected: ", cameras);
+      // console.log("Cameras Detected: ", cameras);
       return cameras;
     };
 
@@ -64,8 +63,16 @@ const BarcodeScanner = () => {
     }
   }, [torchOn, setTorch]);
 
+  useEffect(() => {
+    if (!width) {
+      updateWindowSize();
+    }
+  }, [scanning]);
+
   // get window size
   const updateWindowSize = () => {
+    // log
+    console.log("updateWindowSize", window.innerWidth, window.innerHeight);
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
@@ -74,52 +81,124 @@ const BarcodeScanner = () => {
     const handleResize = () => {
       updateWindowSize();
       Quagga.stop();
-      Quagga.start();
+      try {
+        Quagga.start();
+      } catch (error) {
+        console.error("Error starting Quagga:", error);
+      }
     };
+
+    // handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const hasResult = !isEmpty(results);
+
+  async function onDetected(result: any) {
+    console.log("onDetected", result);
+    setResults([...results, result]);
+    setScanning(false);
+
+    try {
+      const key = "1234567890" || result;
+      const response = await getKey(key);
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div>
-      {cameraError ? <p>ERROR INITIALIZING CAMERA ${JSON.stringify(cameraError)} -- DO YOU HAVE PERMISSION?</p> : null}
-      {cameras.length === 0 ? (
-        <p>Enumerating Cameras, browser may be prompting for permissions beforehand</p>
-      ) : (
-        <form>
-          <select onChange={(event) => setCameraId(event.target.value as any)}>
-            {cameras.map((camera: any) => (
-              <option key={camera.deviceId} value={camera.deviceId}>
-                {camera.label || camera.deviceId}
-              </option>
-            ))}
-          </select>
-        </form>
-      )}
-      <Button className="cursor-pointer" onClick={onTorchClick}>
-        {torchOn ? "Disable Torch" : "Enable Torch"}
-      </Button>
-      &nbsp;
-      <Button className="cursor-pointer" onClick={() => setScanning(!scanning)}>
-        {scanning ? "Stop" : "Start"}
-      </Button>
-      <ul className="results">
+      {/* // center align */}
+      <div className="flex justify-center my-2">
+        <div className="flex">
+          {cameraError ? (
+            <p>ERROR INITIALIZING CAMERA ${JSON.stringify(cameraError)} -- DO YOU HAVE PERMISSION?</p>
+          ) : null}
+          {cameras.length === 0 ? (
+            <p>Enumerating Cameras, browser may be prompting for permissions beforehand</p>
+          ) : (
+            <form>
+              <select
+                onChange={(event) => {
+                  updateWindowSize();
+                  setCameraId(event.target.value as any);
+                }}
+              >
+                {cameras.map((camera: any) => (
+                  <option key={camera.deviceId} value={camera.deviceId}>
+                    {camera.label || camera.deviceId}
+                  </option>
+                ))}
+              </select>
+            </form>
+          )}
+        </div>
+        <br />
+        <Button className="cursor-pointer" onClick={() => setScanning(!scanning)}>
+          {scanning ? "Stop" : "Start"}
+        </Button>
+        &nbsp;
+        <Button className="cursor-pointer mb-1" onClick={onTorchClick}>
+          {torchOn ? "Disable Torch" : "Enable Torch"}
+        </Button>
+        &nbsp;
+      </div>
+      {/* <ul className="results">
         {results.map((result) => result.codeResult && <Result key={result.codeResult.code} result={result} />)}
-      </ul>
-      <div ref={scannerRef} className="h-screen w-screen 1px solid mt-[60]">
+      </ul> */}
+      <div ref={scannerRef} style={{ position: "relative" }}>
         {/* <video style={{ width: window.innerWidth, height: 480, border: '3px solid orange' }}/> */}
         {/* Make the canvas fill the screen */}
         <canvas
+          className="drawingBuffer"
+          style={{
+            position: "absolute",
+            top: "0px",
+            // left: '0px',
+            // border: "3px solid green",
+          }}
           width={width}
           height={height}
-          className="drawingBuffer"
-          style={{ position: "absolute", left: 0, top: 60, width: "100%", height: "100%" }}
         />
-        {scanning ? (
+        {/* Tailwind modal */}
+
+        {hasResult && (
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center">
+            <div className="bg-white p-4 rounded-lg w-96">
+              <div className="flex justify-between">
+                <h2 className="text-lg font-semibold">Item detected!</h2>
+                <button
+                  onClick={() => {
+                    setResults([]);
+                    setScanning(true);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+              <div className="w-full h-96 border-2 p-4 border-dashed border-gray-400">
+                {JSON.stringify(results)}
+                {data && <RenderObject obj={data} title={data.name} />}
+                {!data.name && (
+                  <div>
+                    <div className="text-lg font-semibold">No data found</div>
+                    <div className="text-sm">Try scanning another item!</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {scanning && width > 0 ? (
           <Scanner
+            constraints={{ width, height }}
             scannerRef={scannerRef}
             cameraId={cameraId}
-            onDetected={(result) => setResults([...results, result])}
+            onDetected={onDetected}
           />
         ) : null}
       </div>
