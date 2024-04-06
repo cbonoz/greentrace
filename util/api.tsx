@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_KEY = process.env.NEXT_PUBLIC_SERVER_KEY;
-const config = {
+const config: any = {
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   // set header
   headers: {

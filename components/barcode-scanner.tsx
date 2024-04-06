@@ -204,7 +204,7 @@ const BarcodeScanner = () => {
           <Scanner
             constraints={{ width, height }}
             scannerRef={scannerRef}
-            cameraId={cameraId}
+            cameraId={cameraId as any}
             onDetected={onDetected}
           />
         ) : null}

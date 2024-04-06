@@ -47,10 +47,10 @@ function UploadForm() {
         success: "Product uploaded successfully",
       });
       form.setValue("name", "");
-    } catch (error) {
-      console.error(error);
+    } catch (err: any) {
+      console.error(err);
       setResult({
-        error: error?.message || "Unknown error",
+        error: err?.message || "Unknown error",
       });
     } finally {
       setLoading(false);

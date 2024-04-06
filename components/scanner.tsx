@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import Quagga from "@ericblade/quagga2";
 
-function getMedian(arr) {
+function getMedian(arr: number[]) {
   const newArr = [...arr]; // copy the array before sorting, otherwise it mutates the array passed in, which is generally undesireable
   newArr.sort((a, b) => a - b);
   const half = Math.floor(newArr.length / 2);
@@ -12,7 +12,7 @@ function getMedian(arr) {
   return (newArr[half - 1] + newArr[half]) / 2;
 }
 
-function getMedianOfCodeErrors(decodedCodes) {
+function getMedianOfCodeErrors(decodedCodes: any[]) {
   const errors = decodedCodes.flatMap((x) => x.error);
   const medianOfErrors = getMedian(errors);
   return medianOfErrors;
@@ -31,6 +31,18 @@ const defaultLocatorSettings = {
 
 const defaultDecoders = ["ean_reader"];
 
+interface Props {
+  onDetected: (code: string) => void;
+  scannerRef: any;
+  onScannerReady?: () => void;
+  cameraId?: string;
+  facingMode?: string;
+  constraints?: Record<string, any>;
+  locator?: Record<string, any>;
+  decoders?: string[];
+  locate?: boolean;
+}
+
 const Scanner = ({
   onDetected,
   scannerRef,
@@ -41,9 +53,9 @@ const Scanner = ({
   locator = defaultLocatorSettings,
   decoders = defaultDecoders,
   locate = true,
-}) => {
+}: Props) => {
   const errorCheck = useCallback(
-    (result) => {
+    (result: any) => {
       if (!onDetected) {
         return;
       }
@@ -57,7 +69,7 @@ const Scanner = ({
     [onDetected],
   );
 
-  const handleProcessed = (result) => {
+  const handleProcessed = (result: any) => {
     const drawingCtx = Quagga.canvas.ctx.overlay;
     const drawingCanvas = Quagga.canvas.dom.overlay;
     drawingCtx.font = "24px Arial";
@@ -69,12 +81,12 @@ const Scanner = ({
         drawingCtx.clearRect(
           0,
           0,
-          parseInt(drawingCanvas.getAttribute("width")),
-          parseInt(drawingCanvas.getAttribute("height")),
+          parseInt(drawingCanvas.getAttribute("width") || "640"),
+          parseInt(drawingCanvas.getAttribute("height") || "480"),
         );
         result.boxes
-          .filter((box) => box !== result.box)
-          .forEach((box) => {
+          .filter((box: any) => box !== result.box)
+          .forEach((box: any) => {
             Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: "purple", lineWidth: 2 });
           });
       }
@@ -122,7 +134,7 @@ const Scanner = ({
             willReadFrequently: true,
           },
           locator,
-          decoder: { readers: decoders },
+          decoder: { readers: decoders as any },
           locate,
         },
         async (err) => {
@@ -162,18 +174,6 @@ const Scanner = ({
     facingMode,
   ]);
   return null;
-};
-
-Scanner.propTypes = {
-  onDetected: PropTypes.func.isRequired,
-  scannerRef: PropTypes.object.isRequired,
-  onScannerReady: PropTypes.func,
-  cameraId: PropTypes.string,
-  facingMode: PropTypes.string,
-  constraints: PropTypes.object,
-  locator: PropTypes.object,
-  decoders: PropTypes.array,
-  locate: PropTypes.bool,
 };
 
 export default Scanner;
