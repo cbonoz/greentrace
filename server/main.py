@@ -7,6 +7,7 @@ import uuid
 
 app = FastAPI()
 
+# TODO: cors
 origins = [
     "https://vercel.app",
     "https://usegreentrace.vercel.app",
@@ -18,7 +19,7 @@ origins = [
 from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origins],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["X-Api-Key", "api_key", "Content-Type", "Authorization"]

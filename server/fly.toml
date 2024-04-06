@@ -7,7 +7,7 @@ app = 'greentrace-backend'
 primary_region = 'bos'
 
 [build]
-  builder = 'paketobuildpacks/builder:base'
+  dockerfile = "Dockerfile.prod"
 
 [env]
   PORT = '8080'
