@@ -182,7 +182,14 @@ const BarcodeScanner = () => {
               <div className="w-full h-96 border-2 p-4 border-dashed border-gray-400">
                 {JSON.stringify(results)}
                 <br />
-                {data && <RenderObject obj={data} title={data.value?.name} />}
+                {data && (
+                  <div>
+                    <RenderObject obj={data} title={data.value?.name} />
+                    <div className="text-lg">Uploaded documents/certifications</div>
+                    <div className="text-med text-black-500">No documents found</div>
+                  </div>
+                )}
+
                 {!data.value && (
                   <div>
                     <div className="text-sm">Try scanning another item!</div>
