@@ -95,14 +95,13 @@ const BarcodeScanner = () => {
 
   const hasResult = !isEmpty(results);
 
-  async function onDetected(result: any) {
+  async function onDetected(result: string) {
     console.log("onDetected", result);
     setResults([...results, result]);
     setScanning(false);
 
     try {
-      const key = "1234567890" || result;
-      const response = await getKey(key);
+      const response = await getKey(result);
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -169,7 +168,8 @@ const BarcodeScanner = () => {
           <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center">
             <div className="bg-white p-4 rounded-lg w-96">
               <div className="flex justify-between">
-                <h2 className="text-lg font-semibold">Item detected!</h2>
+                {!data.value && <div className="text-lg font-semibold text-red-500">No data found</div>}
+                {data.value && <div className="text-lg font-semibold text-green-500">Item detected!</div>}
                 <button
                   onClick={() => {
                     setResults([]);
@@ -181,10 +181,10 @@ const BarcodeScanner = () => {
               </div>
               <div className="w-full h-96 border-2 p-4 border-dashed border-gray-400">
                 {JSON.stringify(results)}
-                {data && <RenderObject obj={data} title={data.name} />}
-                {!data.name && (
+                <br />
+                {data && <RenderObject obj={data} title={data.value?.name} />}
+                {!data.value && (
                   <div>
-                    <div className="text-lg font-semibold">No data found</div>
                     <div className="text-sm">Try scanning another item!</div>
                   </div>
                 )}

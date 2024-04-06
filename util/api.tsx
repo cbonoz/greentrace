@@ -17,8 +17,6 @@ if (config.baseURL.indexOf("localhost") > -1) {
 export const axiosInstance = axios.create(config);
 
 export const setKey = (key: string, value: any) => {
-  // print axios config
-  console.log("axiosInstance", axiosInstance.defaults);
   return axiosInstance.post("/set", { key, value });
 };
 
