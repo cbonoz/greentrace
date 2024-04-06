@@ -7,11 +7,18 @@ import uuid
 
 app = FastAPI()
 
+origins = [
+    "https://vercel.app",
+    "https://usegreentrace.vercel.app",
+    "http://localhost",
+    "http://localhost:3000",
+]
+
 # Enable cors
 from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["X-Api-Key", "api_key", "Content-Type", "Authorization"]
@@ -79,4 +86,4 @@ async def get_hello():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    uvicorn.run(app, host="127.0.0.1", port=8080)
