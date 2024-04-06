@@ -65,3 +65,33 @@ The web project should now be running on port 3000
 - Collaborating with manufacturers and retailers to encourage widespread adoption of Greentrace and promote sustainable consumption habits globally.
 
 ### Screenshots
+
+
+# Image Gallery
+
+<div align="center">
+  <div style="max-width: 600px;">
+    <h2>Home Image</h2>
+    <img src="img/home.jpg" alt="Home Image" style="max-width: 100%;">
+  </div>
+  <div style="max-width: 600px;">
+    <h2>No Match Image</h2>
+    <img src="img/no_match.jpg" alt="No Match Image" style="max-width: 100%;">
+  </div>
+  <div style="max-width: 600px;">
+    <h2>Result Image</h2>
+    <img src="img/result.jpg" alt="Result Image" style="max-width: 100%;">
+  </div>
+  <div style="max-width: 600px;">
+    <h2>Form Image</h2>
+    <img src="img/form.jpg" alt="Form Image" style="max-width: 100%;">
+  </div>
+  <div style="max-width: 600px;">
+    <h2>Match Image</h2>
+    <img src="img/match.jpg" alt="Match Image" style="max-width: 100%;">
+  </div>
+  <div style="max-width: 600px;">
+    <h2>Scan Image</h2>
+    <img src="img/scan.jpg" alt="Scan Image" style="max-width: 100%;">
+  </div>
+</div>
