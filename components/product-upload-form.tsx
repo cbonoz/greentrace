@@ -47,7 +47,7 @@ function UploadForm() {
     try {
       await setKey(values.sku, values);
       setResult({
-        success: "Product uploaded successfully",
+        success: "Product uploaded successfully with barcode " + values.sku,
       });
       // scroll to result
       window.scrollTo(0, document.body.scrollHeight);
