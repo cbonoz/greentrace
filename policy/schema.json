@@ -1,0 +1,101 @@
+{
+    "$id": "#107b4b65-0d9f-4b7b-bc7d-451517969576",
+    "$comment": "{ \"@id\": \"schema:107b4b65-0d9f-4b7b-bc7d-451517969576#107b4b65-0d9f-4b7b-bc7d-451517969576\", \"term\": \"107b4b65-0d9f-4b7b-bc7d-451517969576\" }",
+    "title": "Greentrace",
+    "description": "Greentrace is an app that utilizes Hedera to provide users with a transparent and immutable platform for tracing product origins and verifying sustainability practices, fostering eco-conscious consumption habits.",
+    "type": "object",
+    "properties": {
+        "@context": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "readOnly": true
+        },
+        "type": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "readOnly": true
+        },
+        "id": {
+            "type": "string",
+            "readOnly": true
+        },
+        "field0": {
+            "title": "field0",
+            "description": "Product Id",
+            "readOnly": false,
+            "type": "number",
+            "$comment": "{\"term\":\"field0\",\"@id\":\"https://www.schema.org/text\",\"property\":\"ClimateLabel.id\",\"orderPosition\":0}"
+        },
+        "field1": {
+            "title": "field1",
+            "description": "Product Name",
+            "readOnly": false,
+            "type": "string",
+            "$comment": "{\"term\":\"field1\",\"@id\":\"https://www.schema.org/text\",\"property\":\"ClimateLabel.name\",\"orderPosition\":1}"
+        },
+        "field2": {
+            "title": "field2",
+            "description": "Product Description",
+            "readOnly": false,
+            "type": "string",
+            "$comment": "{\"term\":\"field2\",\"@id\":\"https://www.schema.org/text\",\"property\":\"ClimateLabel.description\",\"orderPosition\":2}"
+        },
+        "field3": {
+            "title": "field3",
+            "description": "Validating Party Id",
+            "readOnly": false,
+            "type": "number",
+            "$comment": "{\"term\":\"field3\",\"@id\":\"https://www.schema.org/text\",\"property\":\"Validation.validatingPartyId\",\"orderPosition\":3}"
+        },
+        "field4": {
+            "title": "field4",
+            "description": "Validation Date",
+            "readOnly": false,
+            "type": "string",
+            "format": "date-time",
+            "$comment": "{\"term\":\"field4\",\"@id\":\"https://www.schema.org/text\",\"property\":\"Validation.validationDate\",\"orderPosition\":4}"
+        },
+        "field5": {
+            "title": "field5",
+            "description": "Environmental Impact Quantity",
+            "readOnly": false,
+            "type": "number",
+            "$comment": "{\"term\":\"field5\",\"@id\":\"https://www.schema.org/text\",\"property\":\"ImpactClaim.quantity\",\"orderPosition\":5}"
+        },
+        "field6": {
+            "title": "field6",
+            "description": "Environmental Impact Units",
+            "readOnly": false,
+            "type": "string",
+            "$comment": "{\"term\":\"field6\",\"@id\":\"https://www.schema.org/text\",\"property\":\"ImpactClaim.unit\",\"orderPosition\":6}"
+        }
+    },
+    "required": [
+        "@context",
+        "type",
+        "field0",
+        "field3",
+        "field4",
+        "field5"
+    ],
+    "additionalProperties": false,
+    "$defs": {}
+} 
