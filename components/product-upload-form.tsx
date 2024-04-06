@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { isEmpty } from "@/lib/utils";
 import { setKey } from "@/util/api";
+import RenderObject from "./render-object";
 
 const formSchema = z.object({
   name: z.string().min(3, {
@@ -18,9 +19,10 @@ const formSchema = z.object({
   sku: z.string().min(10, {
     message: "Barcode must be at least 10 characters.",
   }),
-  emissions: z.number().optional(),
+  emissions: z.string().optional(),
   // notes
   notes: z.string().optional(),
+  date: z.date().optional(),
 });
 
 function UploadForm() {
@@ -30,11 +32,12 @@ function UploadForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "Nature valley bars",
+      name: "Nature granola bars",
       sku: "1234567890",
-      emissions: 10,
+      emissions: "0.42 kg/serving",
       // example notes for a product evaluation
-      notes: "This product has a high carbon footprint.",
+      notes: "This product has a high carbon footprint relative to competitors.",
+      date: new Date(),
     },
   });
 
@@ -46,6 +49,9 @@ function UploadForm() {
       setResult({
         success: "Product uploaded successfully",
       });
+      // scroll to result
+      window.scrollTo(0, document.body.scrollHeight);
+
       form.setValue("name", "");
     } catch (err: any) {
       console.error(err);
@@ -57,93 +63,116 @@ function UploadForm() {
     }
   }
 
+  const hasResult = !isEmpty(result);
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Enter product name</FormLabel>
-              <FormControl>
-                <Input placeholder="Nature Valley Muffin Bars" {...field} />
-              </FormControl>
-              <FormDescription>Name of the product to index.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* Barcode */}
+    <div>
+      {!hasResult && (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Enter product name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Nature granola bars" {...field} />
+                  </FormControl>
+                  <FormDescription>Name of the product to index.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Barcode */}
 
-        <FormField
-          control={form.control}
-          name="sku"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Enter barcode</FormLabel>
-              <FormControl>
-                <Input placeholder="1234567890" {...field} />
-              </FormControl>
-              <FormDescription>Barcode of the product to index.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            <FormField
+              control={form.control}
+              name="sku"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Enter barcode</FormLabel>
+                  <FormControl>
+                    <Input placeholder="1234567890" {...field} />
+                  </FormControl>
+                  <FormDescription>Barcode of the product to index.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        {/* Emissions */}
-        <FormField
-          control={form.control}
-          name="emissions"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Enter emissions</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder={"0"} {...field} />
-              </FormControl>
-              <FormDescription>Carbon emissions of the product.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            {/* Emissions */}
+            <FormField
+              control={form.control}
+              name="emissions"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Enter estimated CO2 emissions</FormLabel>
+                  <FormControl>
+                    <Input type="string" placeholder={"0.42 kg/serving"} {...field} />
+                  </FormControl>
+                  <FormDescription>Estimated Carbon Dioxide (CO2) emissions of producing the product.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        {/* Notes */}
-        <FormField
-          control={form.control}
-          name="notes"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Enter notes</FormLabel>
-              <FormControl>
-                <Input placeholder="Notes" {...field} />
-              </FormControl>
-              <FormDescription>Notes about the product.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button disabled={loading} type="submit">
-          Submit
-        </Button>
-      </form>
+            {/* Notes */}
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Enter notes</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Notes" {...field} />
+                  </FormControl>
+                  <FormDescription>Notes about the product.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-      {!isEmpty(result) && (
-        <div className="pt-8">
-          <div className="text-xl text-bold">Result:</div>
-          <div>{JSON.stringify(result)}</div>
-        </div>
-      )}
+            <FormField
+              control={form.control}
+              name="date"
+              disabled={true}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date uploaded</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Date uploaded" disabled={true} value={new Date().toLocaleDateString()} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-      {/* error */}
-      {/* {form.formState.errors && (
+            <Button disabled={loading} type="submit">
+              Submit
+            </Button>
+          </form>
+
+          {/* error */}
+          {/* {form.formState.errors && (
         <div className="pt-8">
           <div className="text-xl text-bold">Errors:</div>
           <div>{JSON.stringify(form.formState.errors)}</div>
         </div>
       )} */}
 
-      {/* formState */}
-    </Form>
+          {/* formState */}
+        </Form>
+      )}
+      {hasResult && (
+        <div className="pt-8">
+          <Button onClick={() => setResult(null)}> ← Back to form</Button>
+          <div className="mt-4">
+            <RenderObject title="Result" obj={result} />
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

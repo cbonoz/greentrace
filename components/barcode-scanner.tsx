@@ -168,7 +168,7 @@ const BarcodeScanner = () => {
           <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center">
             <div className="bg-white p-4 rounded-lg w-96">
               <div className="flex justify-between">
-                {!data.value && <div className="text-lg font-semibold text-red-500">No data found</div>}
+                {!data.value && <div className="text-lg font-semibold text-red-500">No product found</div>}
                 {data.value && <div className="text-lg font-semibold text-green-500">Item detected!</div>}
                 <button
                   onClick={() => {
@@ -182,17 +182,17 @@ const BarcodeScanner = () => {
               <div className="w-full h-96 border-2 p-4 border-dashed border-gray-400">
                 {JSON.stringify(results)}
                 <br />
-                {data && (
+
+                {!data.value && (
+                  <div className="my-2">
+                    <div className="text-sm">Try scanning another item!</div>
+                  </div>
+                )}
+                {data.value && (
                   <div>
                     <RenderObject obj={data} title={data.value?.name} />
                     <div className="text-lg">Uploaded documents/certifications</div>
                     <div className="text-med text-black-500">No documents found</div>
-                  </div>
-                )}
-
-                {!data.value && (
-                  <div>
-                    <div className="text-sm">Try scanning another item!</div>
                   </div>
                 )}
               </div>

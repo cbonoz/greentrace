@@ -59,7 +59,9 @@ The web project should now be running on port 3000
 - The importance of data security and integrity in sustainable supply chain management.
 - Strategies for designing and developing user-friendly interfaces for complex applications.
 
-## What's next for Greentrace
+## Potential future work
 - Expanding the database of sustainable practices and certifications to provide more comprehensive information to consumers.
 - Integrating additional features such as user reviews and ratings to further enhance transparency and trust in the system.
 - Collaborating with manufacturers and retailers to encourage widespread adoption of Greentrace and promote sustainable consumption habits globally.
+
+### Screenshots
