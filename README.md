@@ -6,11 +6,11 @@
 
 Greentrace is an app that utilizes Hedera to provide users with a transparent and immutable platform for tracing product origins and verifying sustainability practices, fostering eco-conscious consumption habits.
 
-Built for the <a href="https://dlt-climate-hackathon.devpost.com/" target="_blank">DLT climate hackathon</a> 2024.
+Built, deployed, and open sourced for the <a href="https://dlt-climate-hackathon.devpost.com/" target="_blank">DLT climate hackathon</a> 2024.
 
 Live Demo URL: usegreentrace.vercel.app (scan items!)
 
-Demo video:
+Demo video: https://youtu.be/SVaPdyQLuFk
 
 ## Inspiration
 The inspiration behind Greentrace stems from the urgent need to address climate change and promote sustainable practices in supply chains. By leveraging emerging technologies like Distributed Ledger Technology (DLT) and the Hedera Guardian, Greentrace aims to empower consumers and businesses to make informed choices about the products they purchase and the companies they support. The goal is to create a transparent and auditable system that traces the origins of products back to their sustainable creation practices, thus promoting accountability and incentivizing eco-friendly production methods.
