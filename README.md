@@ -69,7 +69,7 @@ The web project should now be running on port 3000
 - Expanding the database of sustainable practices and certifications to provide more comprehensive information to consumers.
 - Integrating additional features such as user reviews and ratings to further enhance transparency and trust in the system.
 - Collaborating with manufacturers and retailers to encourage widespread adoption of Greentrace and promote sustainable consumption habits globally.
-
+- Integration of additional credential validation for product uploaders.
 
 # Image Gallery
 
