@@ -31,6 +31,10 @@ Summary:
 
 Greentrace leverages Hedera's innovative policies and methodologies to establish a robust framework for ensuring data integrity and accountability in sustainable supply chains. By implementing Hedera policies, Greentrace can securely freeze and tamper-seal sustainability records, guaranteeing their immutability and reliability. This approach not only instills trust in the information stored on the platform but also empowers users to make informed decisions about their purchases, thereby driving forward climate accountability and supporting the mission of Auditable, Discoverable, and Liquid sustainability/ESG assets.
 
+<p align='center'>
+<img src='./img/diagram.png' width=400 />
+</p>
+
 ## Repo structure
 <pre>
 `/` (root): Main web project
@@ -93,5 +97,9 @@ The web project should now be running on port 3000
   <div style="max-width: 600px;">
     <h2>Scan Image</h2>
     <img src="img/scan.png" alt="Scan Image" style="max-width: 100%;">
+  </div>
+    <div style="max-width: 600px;">
+    <h2>Screenshot of Schema</h2>
+    <img src="img/policy.png" alt="Policy Image" style="max-width: 100%;">
   </div>
 </div>
