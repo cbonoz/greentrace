@@ -191,7 +191,8 @@ const BarcodeScanner = () => {
                 {data.value && (
                   <div>
                     <RenderObject obj={data} title={data.value?.name} />
-                    <div className="text-lg">Uploaded documents/certifications</div>
+                    <hr />
+                    <div className="text-lg mt-2">Uploaded documents/certifications</div>
                     <div className="text-med text-black-500">No documents found</div>
                   </div>
                 )}
