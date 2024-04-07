@@ -48,6 +48,10 @@ Greentrace leverages Hedera's innovative policies and methodologies to establish
 
 The web project should now be running on port 3000
 
+## How the policy is structured
+
+The policy is structured as metadata that get either directly filled or autofilled from the consumer application. The policy schema is available <a href="https://github.com/cbonoz/greentrace/blob/main/policy/schema.json" target="_blank">here</a>
+
 
 ## Challenges we ran into
 - Integrating the barcode reader functionality seamlessly into the web application.
