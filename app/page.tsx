@@ -1,10 +1,6 @@
 import { RouteButtons } from "@/components/route-buttons";
+import { config } from "@/util/site-config";
 import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "greentrace",
-  description: "An app to help trace the origins of your food backed by Hedera",
-};
 
 export default function Home() {
   return (
@@ -14,7 +10,7 @@ export default function Home() {
         <img src="/logo.png" alt="greentrace" className="my-4" />
         <RouteButtons />
       </div>
-      <p className="text-lg pt-8">{metadata.description}</p>
+      <p className="text-lg pt-8">{config.description}</p>
     </main>
   );
 }
